@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yijiazheng.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.yijiazheng.entity.Student">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    SELECT 
+    ID, NAME
+    FROM T_STU
+  </select>
+  
+  <sql id="Base_Column_List">
+    ID, NAME
+  </sql>
+  
+  <!-- 
+  <select id="queryGoodsCountByKeyword" resultType="int">
+    SELECT COUNT(*) FROM goods WHERE vGoodsName REGEXP #{keyword}
+  </select>
+  通过商店id获取商品
+  <select id="queryByShopId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where lShopId = #{shopId,jdbcType=BIGINT}
+    LIMIT 3
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where lGoodsId = #{goodsId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByShopIdAndClassifyId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where lShopId = #{shopId} and lGoodsClassifyId = #{goodsClassifyId}
+  </select>
+  
+  <select id="queryGoodsByLikeAndShopId" resultMap="BaseResultMap"> 
+      select
+      <include refid="Base_Column_List" />
+      from goods
+      where lshopId = #{shopId} and vGoodsName REGEXP #{likeString}
+  </select>
+  SELECT d.vGoodsName FROM goods d WHERE d.vGoodsName REGEXP #{keyword} AND d.lShopId=s.lShopId
+  		)
+  		AND s.vShopName NOT LIKE CONCAT('%',#{keyword},'%')
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from goods
+    where lGoodsId = #{goodsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.chihuobao.entity.Goods">
+    insert into goods (lGoodsId, lShopId, vGoodsName, 
+      dGoodsPrice, vGoodsPhoto, vGoodsDescription, 
+      iGoodsSales, tIsPass, tIsOnline, 
+      lGoodsClassifyId, iGoodsNumber)
+    values (#{goodsId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsPrice,jdbcType=DOUBLE}, #{goodsPhoto,jdbcType=VARCHAR}, #{goodsDescription,jdbcType=VARCHAR}, 
+      #{goodsSales,jdbcType=INTEGER}, #{isPass,jdbcType=BIT}, #{isOnline,jdbcType=BIT}, 
+      #{goodsClassifyId,jdbcType=BIGINT}, #{goodsNumber,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chihuobao.entity.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        lGoodsId,
+      </if>
+      <if test="shopId != null">
+        lShopId,
+      </if>
+      <if test="goodsName != null">
+        vGoodsName,
+      </if>
+      <if test="goodsPrice != null">
+        dGoodsPrice,
+      </if>
+      <if test="goodsPhoto != null">
+        vGoodsPhoto,
+      </if>
+      <if test="goodsDescription != null">
+        vGoodsDescription,
+      </if>
+      <if test="goodsSales != null">
+        iGoodsSales,
+      </if>
+      <if test="isPass != null">
+        tIsPass,
+      </if>
+      <if test="isOnline != null">
+        tIsOnline,
+      </if>
+      <if test="goodsClassifyId != null">
+        lGoodsClassifyId,
+      </if>
+      <if test="goodsNumber != null">
+        iGoodsNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsPhoto != null">
+        #{goodsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDescription != null">
+        #{goodsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSales != null">
+        #{goodsSales,jdbcType=INTEGER},
+      </if>
+      <if test="isPass != null">
+        #{isPass,jdbcType=BIT},
+      </if>
+      <if test="isOnline != null">
+        #{isOnline,jdbcType=BIT},
+      </if>
+      <if test="goodsClassifyId != null">
+        #{goodsClassifyId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsNumber != null">
+        #{goodsNumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chihuobao.entity.Goods">
+    update goods
+    <set>
+      <if test="shopId != null">
+        lShopId = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        vGoodsName = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        dGoodsPrice = #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsPhoto != null">
+        vGoodsPhoto = #{goodsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDescription != null">
+        vGoodsDescription = #{goodsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSales != null">
+        iGoodsSales = #{goodsSales,jdbcType=INTEGER},
+      </if>
+      <if test="isPass != null">
+        tIsPass = #{isPass,jdbcType=BIT},
+      </if>
+      <if test="isOnline != null">
+        tIsOnline = #{isOnline,jdbcType=BIT},
+      </if>
+      <if test="goodsClassifyId != null">
+        lGoodsClassifyId = #{goodsClassifyId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsNumber != null">
+        iGoodsNumber = #{goodsNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where lGoodsId = #{goodsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chihuobao.entity.Goods">
+    update goods
+    set lShopId = #{shopId,jdbcType=BIGINT},
+      vGoodsName = #{goodsName,jdbcType=VARCHAR},
+      dGoodsPrice = #{goodsPrice,jdbcType=DOUBLE},
+      vGoodsPhoto = #{goodsPhoto,jdbcType=VARCHAR},
+      vGoodsDescription = #{goodsDescription,jdbcType=VARCHAR},
+      iGoodsSales = #{goodsSales,jdbcType=INTEGER},
+      tIsPass = #{isPass,jdbcType=BIT},
+      tIsOnline = #{isOnline,jdbcType=BIT},
+      lGoodsClassifyId = #{goodsClassifyId,jdbcType=BIGINT},
+      iGoodsNumber = #{goodsNumber,jdbcType=INTEGER}
+    where lGoodsId = #{goodsId,jdbcType=BIGINT}
+  </update>
+  -->
+</mapper>
